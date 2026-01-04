@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Analysis Result</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+      color: white;
+    }
+
+    .container {
+      width: 500px;
+      margin: 80px auto;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    a {
+      color: #00ffd5;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>📊 Analysis Result</h2>
+
+  <p><b>Status:</b> {{ status }}</p>
+  <p><b>Confidence:</b> {{ confidence }}%</p>
+
+  <canvas id="chart"></canvas>
+
+  <br><br>
+  <a href="/">← New Analysis</a>
+</div>
+
+<script>
+  const baseline = {{ baseline }};
+  const measured = {{ measured }};
+  const ratio = {{ ratio }};
+
+  const ctx = document.getElementById("chart");
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Baseline Diameter", "Measured Diameter", "Dilation Ratio"],
+      datasets: [{
+        label: "Pupil Analysis Metrics",
+        data: [baseline, measured, ratio],
+        backgroundColor: [
+          "rgba(0, 255, 213, 0.8)",
+          "rgba(0, 180, 255, 0.8)",
+          "rgba(255, 99, 132, 0.8)"
+        ],
+        borderColor: "#ffffff",
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: "#ffffff",
+            font: { size: 13 }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: "#ffffff",
+            font: { size: 12 }
+          },
+          title: {
+            display: true,
+            text: "Measurement Type",
+            color: "#00ffd5",
+            font: {
+              size: 14,
+              weight: "bold"
+            }
+          },
+          grid: {
+            color: "rgba(255,255,255,0.15)"
+          },
+          border: { color: "#ffffff" }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: "#ffffff",
+            font: { size: 12 }
+          },
+          title: {
+            display: true,
+            text: "Value (mm / ratio)",
+            color: "#00ffd5",
+            font: {
+              size: 14,
+              weight: "bold"
+            }
+          },
+          grid: {
+            color: "rgba(255,255,255,0.15)"
+          },
+          border: { color: "#ffffff" }
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
